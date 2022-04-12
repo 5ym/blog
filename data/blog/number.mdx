@@ -1,0 +1,80 @@
+---
+title: クレジットカード番号の検証
+summary: クレジットカード番号の検証
+date: "2018-07-27T00:00:00Z"
+
+tags: ["cresec", "クレジットカード"]
+draft: false
+---
+
+<section>
+<h2>はじめに</h2>
+<p>普段目にしているクレジットカードの番号ですがこれにも様々なルールやセキュリティ対策がなされています。今回はそれについて説明していきます。</p>
+</section>
+<section>
+<h2>番号の概要</h2>
+<p>まずクレジットカード番号がどのように構成されているかですがクレジットカード番号はISO/IEC 7812にて策定されており、6桁のBIN（Bank Identification Number, 銀行識別番号）もしくはIIN（Issuer Identification Number, 発行者識別番号）+残りの番号はイシュアによって決定されます。</p>
+<section>
+<h3>BIN、IINについて</h3>
+<p>BIN、IINもまた複数要素で構成されており最初の1桁はMII（Major industry identifier, 主要産業識別子）と呼ばれており、カードを使用する業界を示し対応表を下記のとおりです。</p>
+<table>
+<thead>
+<tr><th>MII値</th><th>産業</th></tr>
+</thead>
+<tbody>
+<tr><th>0</th><td>ISO予約値</td></tr>
+<tr><th>1</th><td>航空</td></tr>
+<tr><th>2</th><td>航空 / その他将来発生する産業</td></tr>
+<tr><th>3</th><td>旅行・娯楽/銀行・金融</td></tr>
+<tr><th>4</th><td>銀行・金融</td></tr>
+<tr><th>5</th><td>銀行・金融</td></tr>
+<tr><th>6</th><td>運送 / 銀行・金融</td></tr>
+<tr><th>7</th><td>石油 / その他将来発生する産業</td></tr>
+<tr><th>8</th><td>ヘルスケア / 医療 / 通信 / その他将来発生する産業</td></tr>
+<tr><th>9</th><td>国毎に割り当て可能</td></tr>
+</tbody>
+</table>
+<p>また以下は主な過去に存在していた若しくは現在存在するBINのリストです。</p>
+<table>
+<thead>
+<tr><th>カードの種別</th><th>プレフィックス</th><th>番号長</th><th>検証</th></tr>
+</thead>
+<tbody>
+<tr><th>American Express</th><td>34, 37</td><td>15</td><td>Luhnアルゴリズム</td></tr>
+<tr><th>中国銀聯 (China UnionPay)</th><td>622126-622925, 624-626, 6282-6288</td><td>16</td><td>なし</td></tr>
+<tr><th>Diners Club International</th><td>300-303574, 3095, 36, 38-39</td><td>14</td><td>Luhnアルゴリズム</td></tr>
+<tr><th>Discover Card</th><td>60110, 60112-60114, 601174-601179, 601186-601199, 644-649, 65</td><td>16</td><td>Luhnアルゴリズム</td></tr>
+<tr><th>JCB</th><td>3528-3589</td><td>16</td><td>Luhnアルゴリズム</td></tr>
+<tr><th>MasterCard</th><td>510000 - 559999, 222100 - 272099</td><td>16</td><td>Luhnアルゴリズム</td></tr>
+<tr><th>UATP</th><td>1</td><td>15</td><td>不明</td></tr>
+<tr><th>Visa</th><td>4</td><td>13, 16</td><td>Luhnアルゴリズム</td></tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<h2>チェックディジットに関して</h2>
+<p>クレジットカード番号にはLuhnアルゴリズムが使用されており、主な目的として連番での発行をさせず、入力ミス等で他人のカードが決済されるのを防ぐためだと推測される。但しこれは計算可能な為悪意のある決済を防ぐ為のものではない。</p>
+</section>
+<section>
+<h2>セキュリティ面での検証</h2>
+<p>以上のルールを踏まえ当方が検証した内容を記述する。</p>
+<section>
+<h3>検証概要</h3>
+<p>近年ではApple Pay等でクレジットカード番号の下4桁が管理用に表示され尚且つApple Payの場合クレジットカードデザインからある程度イシュアが特定可能な為そこからクレジットカード番号が推測できないか検証してみた。</p>
+</section>
+<section>
+<h3>BIN,IINの特定</h3>
+<p>まずカードデザインよりBINを特定してみる、BIN等は公にはされていないが以下サイト等で調べることができるがカード会社によっては途方もないBINの登録がありこの時点でカード番号を特定できるイシュアーが限られてくるが続きはBINが特定されたものとして進めていく</p>
+<a href="https://www.bincodes.com/bin-search/" rel="nofollow">BIN search</a>
+</section>
+<section>
+<h3>カード番号の特定</h3>
+<p>BINが特定されたものとして話を進めていきます。この時点で6桁のBIN+下4桁が判明していることになります。ここで全てのLuhnアルゴリズムに当てはまる数字を算出してみました(今回は16桁で)下記サイトでチェックしましたがゆうに100件を超えており特定が不可能でした。</p>
+<a href="https://www.elfqrin.com/discard_credit_card_generator.php" rel="nofollow">credit card number generator</a>
+</section>
+</section>
+<section>
+<h2>まとめ</h2>
+<p>以上の通りスクリーンショットやレシート画像等から番号特定は現実的にはほぼ不可能という結果になりましたまた近年ではセキュリティコードの必須化や3D secure導入等が進んでおり仮に割れたところで現実的には決済できる加盟店は存在しないでしょう。</p>
+</section>
