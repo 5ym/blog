@@ -47,7 +47,7 @@ const projectsData = [
     title: 'm5-temp',
     description: `m5 stackを使用してウェブフロントで動く温度計を作成しました。`,
     imgSrc: '',
-    href: 'https://api.daco.dev/t/',
+    href: 'https://github.com/5ym/m5-temp',
   },
   {
     title: 'jQuery-Slider',
