@@ -1,0 +1,4 @@
+terminal:
+  # This can be any image that has the necessary runtime environment for your project.
+  image: node:16-alpine
+  script: node ./scripts/compose.js
