@@ -1,11 +1,10 @@
 FROM node:16-alpine
 
 WORKDIR /usr/src/app
-COPY package.json .
-COPY package-lock.json .
-RUN npm ci
+RUN npm i -g npm && chown -R node:node .
+USER node
 COPY . .
-RUN npm run build
+RUN npm ci && npm run build
 
 EXPOSE 3000
 
