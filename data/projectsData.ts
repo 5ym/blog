@@ -16,7 +16,7 @@ const projectsData = [
     title: 'SmartEncounter',
     description: `Yahoo Japan主催のHack Day 2019内ハッカソンにて自分他3名にてアプリケーションの作成を行いました。`,
     imgSrc: '',
-    href: 'https://smaen.daco.dev/',
+    href: 'https://github.com/5ym/smaen',
   },
   {
     title: 'QRcode Entry System',
