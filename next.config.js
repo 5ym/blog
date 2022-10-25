@@ -1,5 +1,3 @@
-const { withContentlayer } = require('next-contentlayer')
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -13,7 +11,7 @@ const ContentSecurityPolicy = `
   media-src 'none';
   connect-src *;
   font-src 'self';
-  child-src giscus.app;
+  frame-src giscus.app
 `
 
 const securityHeaders = [
@@ -54,41 +52,36 @@ const securityHeaders = [
   },
 ]
 
-/**
- * @type {import('next/dist/next-server/server/config').NextConfig}
- **/
-module.exports = withContentlayer(
-  withBundleAnalyzer({
-    reactStrictMode: true,
-    pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    eslint: {
-      dirs: ['pages', 'components', 'lib', 'layouts', 'scripts'],
-    },
-    async headers() {
-      return [
-        {
-          source: '/(.*)',
-          headers: securityHeaders,
-        },
-      ]
-    },
-    webpack: (config, { dev, isServer }) => {
-      config.module.rules.push({
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
+module.exports = withBundleAnalyzer({
+  reactStrictMode: true,
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  eslint: {
+    dirs: ['pages', 'components', 'lib', 'layouts', 'scripts'],
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ]
+  },
+  webpack: (config, { dev, isServer }) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
+
+    if (!dev && !isServer) {
+      // Replace React with Preact only in client production build
+      Object.assign(config.resolve.alias, {
+        'react/jsx-runtime.js': 'preact/compat/jsx-runtime',
+        react: 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
       })
+    }
 
-      if (!dev && !isServer) {
-        // Replace React with Preact only in client production build
-        Object.assign(config.resolve.alias, {
-          'react/jsx-runtime.js': 'preact/compat/jsx-runtime',
-          react: 'preact/compat',
-          'react-dom/test-utils': 'preact/test-utils',
-          'react-dom': 'preact/compat',
-        })
-      }
-
-      return config
-    },
-  })
-)
+    return config
+  },
+})

@@ -25,14 +25,15 @@ const siteMetadata = {
     simpleAnalytics: false, // true or false
     umamiWebsiteId: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
     googleAnalyticsId: 'UA-119941061-5', // e.g. UA-000000-2 or G-XXXXXXX
+    posthogAnalyticsId: '', // posthog.init e.g. phc_5yXvArzvRdqtZIsHkEm3Fkkhm3d0bEYUXCaFISzqPSQ
   },
   newsletter: {
-    // supports mailchimp, buttondown, convertkit, klaviyo, revue
+    // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus
     // Please add your .env file and modify it according to your selection
     provider: 'buttondown',
   },
   comment: {
-    // If you want to use an analytics provider you have to add it to the
+    // If you want to use a commenting system other than giscus you have to add it to the
     // content security policy in the `next.config.js` file.
     // Select a provider and use the environment variables associated to it
     // https://vercel.com/docs/environment-variables
@@ -51,13 +52,16 @@ const siteMetadata = {
       // theme example: light, dark, dark_dimmed, dark_high_contrast
       // transparent_dark, preferred_color_scheme, custom
       theme: 'light',
+      // Place the comment box above the comments. options: bottom, top
+      inputPosition: 'bottom',
+      // Choose the language giscus will be displayed in. options: en, es, zh-CN, zh-TW, ko, ja etc
+      lang: 'ja',
       // theme when dark mode
       darkTheme: 'transparent_dark',
       // If the theme option above is set to 'custom`
       // please provide a link below to your custom theme css file.
       // example: https://giscus.app/themes/custom_example.css
       themeURL: '',
-      lang: 'ja',
     },
     utterancesConfig: {
       // Visit the link below, and follow the steps in the 'configuration' section
