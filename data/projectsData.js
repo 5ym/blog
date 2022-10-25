@@ -1,19 +1,59 @@
 const projectsData = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'Smart-QR-Payment',
+    description: `催事等で使える事前注文と店頭受け取りそしてセルフレジ機能をもったウェブアプリをDjangoとvueで作成しました。`,
+    imgSrc: '',
+    href: 'https://g.daco.dev/5ym/smart-qr-payment',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
+    title: 'Tweel',
+    description: `macab等を利用したtwitter用ウェブアプリを作成しました。
+    機能追加を予定しています。`,
+    imgSrc: '',
+    href: 'https://tweel.daco.dev/',
+  },
+  {
+    title: 'SmartEncounter',
+    description: `Yahoo Japan主催のHack Day 2019内ハッカソンにて自分他3名にてアプリケーションの作成を行いました。`,
+    imgSrc: '',
+    href: 'https://github.com/5ym/smaen',
+  },
+  {
+    title: 'QRcode Entry System',
+    description: `laravelの勉強用にQRcodeで入場支払い管理できる簡易的なものを作成してみました`,
+    imgSrc: '',
+    href: 'https://github.com/5ym/qes',
+  },
+  {
+    title: 'easy-order',
+    description: `小規模な販売で店頭在庫切れ時に店頭で注文を受けて後日渡しをシステム化したもの。`,
+    imgSrc: '',
+    href: 'https://github.com/5ym/easy-order',
+  },
+  {
+    title: 'Kiosk-Webview-Android',
+    description: `ProfileOwner, DeviceOwnerを使用しないkioskアプリを作成いたしました。`,
+    imgSrc: '',
+    href: 'https://github.com/5ym/Kiosk-Webview-Android',
+  },
+  {
+    title: 'Paper-Detection',
+    description: `OpenCVで紙の縁を検出するプログラムを作成しました。
+    notebookを起動するソースコードも付属しております。`,
+    imgSrc: '',
+    href: 'https://github.com/5ym/Paper-Detection',
+  },
+  {
+    title: 'm5-temp',
+    description: `m5 stackを使用してウェブフロントで動く温度計を作成しました。`,
+    imgSrc: '',
+    href: 'https://github.com/5ym/m5-temp',
+  },
+  {
+    title: 'jQuery-Slider',
+    description: `jQueryでよりネイティブな操作感に近いスライダーを作成いたしました。`,
+    imgSrc: '',
+    href: 'https://github.com/5ym/jquery-slider',
   },
 ]
 
