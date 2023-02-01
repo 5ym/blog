@@ -7,21 +7,26 @@ tags: ["Ubuntu", "mastodon", "Docker"]
 draft: false
 ---
 
-# 概要
+## 概要
+
 qiita等に上がっている既存の情報ですと情報が少し古かったりしまたtootsuiteによる公式ドキュメントも現在は存在する為公式ドキュメントに沿って無駄な構成要素を省いて構築していく。
 > 2018-12-25:対話形式のものを使用するように修正タイトルを修正
 > 2018-12-25:公式ドキュメントが移動dockerページがなくなるサポート状況不明
 
 ## 環境
+
 OS:Ubuntu server 18.04 AMI
 HW:aws c5.large
-# nginxの構築
-## nginxのインストール
+
+## nginxの構築
+
+### nginxのインストール
 
 ```console
 sudo apt update
 sudo apt install nginx
 ```
+
 インストールが完了したら下記の通りconfファイルを作成しexample.comを今回インスタンスを作成するドメインに修正する(serverとssl証明書の4箇所)
 
 ```nginx:/etc/nginx/sites-enabled/default
@@ -122,16 +127,20 @@ server {
   error_page 500 501 502 503 504 /500.html;
 }
 ```
-## sslの取得
+
+### sslの取得
 
 ```console
 sudo apt install certbot
 sudo systemctl stop nginx
 sudo certbot certonly --standalone -d {ドメイン}
 ```
+
 この後は対話型で情報入力していきます。
-#dockerの構築
-## dockerのインストール
+
+## dockerの構築
+
+### dockerのインストール
 
 ```console
 sudo apt update
@@ -140,7 +149,8 @@ sudo gpasswd -a $USER docker    #aptで入れると実行する現在のアカ�
 sudo systemctl restart docker
 exit    #一旦セッションを消す
 ```
-## dockerのビルド
+
+### dockerのビルド
 
 ```console
 cd
@@ -149,6 +159,7 @@ cd mastodon
 cp .env.production.sample .env.production
 docker-compose run --rm web bundle exec rake mastodon:setup
 ```
+
 ビルドが完了すると対話形式で情報を入力していきます。
 途中`This configuration will be written to .env.production`と聞かれた際にYesを選択その後下記のような設定ファイルが出力されるのでメモっておき処理が完了したら`.env.production`にコピペして保存する。
 ※このとき別のセッション等で保存後に続きの質問を続行する
