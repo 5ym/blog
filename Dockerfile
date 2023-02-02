@@ -7,8 +7,11 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm run build && apk add --no-cache curl
 
 EXPOSE 3000
 
 CMD npm run serve
+
+HEALTHCHECK \
+CMD curl localhost:3000
