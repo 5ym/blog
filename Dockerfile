@@ -1,13 +1,13 @@
 FROM node:16-alpine
 
 WORKDIR /usr/src/app
-RUN npm i -g npm && chown -R node:node .
+RUN npm i -g npm && chown -R node:node . && apk add --no-cache curl
 USER node
 COPY package.json .
 COPY package-lock.json .
 RUN npm ci
 COPY . .
-RUN npm run build && apk add --no-cache curl
+RUN npm run build
 
 EXPOSE 3000
 
