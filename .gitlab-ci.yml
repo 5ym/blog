@@ -1,6 +1,8 @@
 docker-build-master:
   # Official docker image.
   image: docker:latest
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
   stage: build
   services:
     - docker:dind
@@ -23,6 +25,8 @@ update-production:
 docker-build:
   # Official docker image.
   image: docker:latest
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
   stage: build
   services:
     - docker:dind
