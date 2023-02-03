@@ -10,7 +10,7 @@ draft: false
 ## 概要
 
 qiita等に上がっている既存の情報ですと情報が少し古かったりしまたtootsuiteによる公式ドキュメントも現在は存在する為公式ドキュメントに沿って無駄な構成要素を省いて構築していく。
-> 2018-12-25:対話形式のものを使用するように修正タイトルを修正
+> 2018-12-25:対話形式のものを使用するように修正タイトルを修正  
 > 2018-12-25:公式ドキュメントが移動dockerページがなくなるサポート状況不明
 
 ## 環境
@@ -22,7 +22,7 @@ HW:aws c5.large
 
 ### nginxのインストール
 
-```console
+```shell
 sudo apt update
 sudo apt install nginx
 ```
@@ -130,7 +130,7 @@ server {
 
 ### sslの取得
 
-```console
+```shell
 sudo apt install certbot
 sudo systemctl stop nginx
 sudo certbot certonly --standalone -d {ドメイン}
@@ -142,7 +142,7 @@ sudo certbot certonly --standalone -d {ドメイン}
 
 ### dockerのインストール
 
-```console
+```shell
 sudo apt-get -y remove docker docker-engine docker.io containerd runc
 sudo apt-get update
 sudo apt-get -y install \
@@ -163,7 +163,7 @@ exit    #一旦セッションを消す
 
 ### dockerのビルド
 
-```console
+```shell
 cd
 git clone https://github.com/tootsuite/mastodon
 cd mastodon
@@ -203,7 +203,7 @@ SMTP_FROM_ADDRESS=Mastodon <notifications@m.do-a.co>
 
 最後に下記コマンドを実行して起動
 
-```console
+```shell
 docker-compose up -d
 sudo systemctl restart nginx
 ```
