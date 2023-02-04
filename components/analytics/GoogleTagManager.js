@@ -5,9 +5,9 @@ import siteMetadata from '@/data/siteMetadata'
 const GTMScript = () => {
   return (
     <Script
-    id="gtm"
-    strategy="afterInteractive"
-    dangerouslySetInnerHTML={{
+      id="gtm"
+      strategy="afterInteractive"
+      dangerouslySetInnerHTML={{
       __html: `
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -15,8 +15,8 @@ const GTMScript = () => {
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','${siteMetadata.analytics.googleTagManagerId}');
       `,
-    }}
-  />
+      }}
+    />
   )
 }
 
