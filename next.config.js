@@ -11,7 +11,7 @@ const ContentSecurityPolicy = `
   media-src *;
   connect-src *;
   font-src 'self' fonts.gstatic.com;
-  frame-src giscus.app pagead2.googlesyndication.com googleads.g.doubleclick.net
+  frame-src giscus.app pagead2.googlesyndication.com googleads.g.doubleclick.net tpc.googlesyndication.com www.google.com
 `
 
 const securityHeaders = [
