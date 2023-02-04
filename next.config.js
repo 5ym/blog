@@ -9,9 +9,9 @@ const ContentSecurityPolicy = `
   style-src 'self' 'unsafe-inline' www.googletagmanager.com fonts.googleapis.com;
   img-src * blob: data:;
   media-src *;
-  connect-src *;
+  connect-src * pagead2.googlesyndication.com;
   font-src 'self' fonts.gstatic.com;
-  frame-src giscus.app pagead2.googlesyndication.com
+  frame-src giscus.app
 `
 
 const securityHeaders = [
