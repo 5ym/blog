@@ -1,50 +1,51 @@
 ---
 title: RDS+ECSで定期的にダンプをS3に保存してみる
 summary: RDS+ECSで定期的にダンプをS3に保存してみる
-date: "2019-10-31T00:00:00Z"
+date: '2019-10-31T00:00:00Z'
 
-tags: ["S3", "RDS", "Docker", "ECS", "BitbucketPipelines"]
+tags: ['S3', 'RDS', 'Docker', 'ECS', 'BitbucketPipelines']
 draft: false
 ---
 
 ## 概要
 
-AWSにてRDSの定期ダンプを取得したかったのでECSにあるcron的な機能を使ってダンプを定期取得する設定をしてみた  
-ECSで動かす定期実行用のコンテナのイメージやタスクも管理を自動化してみた  
-今回postgresが対象ですmysql等は適宜dockerfileを変更してください
+AWS にて RDS の定期ダンプを取得したかったので ECS にある cron 的な機能を使ってダンプを定期取得する設定をしてみた  
+ECS で動かす定期実行用のコンテナのイメージやタスクも管理を自動化してみた  
+今回 postgres が対象です mysql 等は適宜 dockerfile を変更してください
 
 ## 前提条件
 
-- AWSのアカウント取得済み
-- RDS構築済み
-- bitbucketのアカウント取得済み
+- AWS のアカウント取得済み
+- RDS 構築済み
+- bitbucket のアカウント取得済み
 
 ## 準備
 
-### IAMユーザーの作成
+### IAM ユーザーの作成
 
-今回bitbucket pipelineからのデプロイとダンプデータS3へのアップロード用にユーザーを作成する。  
-通常はデプロイとS3でユーザーを分けた方がいいのだが今回は管理コストの面で一つで作成します。
+今回 bitbucket pipeline からのデプロイとダンプデータ S3 へのアップロード用にユーザーを作成する。  
+通常はデプロイと S3 でユーザーを分けた方がいいのだが今回は管理コストの面で一つで作成します。
 
-IAMを開き左メニューにあるユーザーを開くその後ユーザーの追加を開くと下記の様な画面になる  
+IAM を開き左メニューにあるユーザーを開くその後ユーザーの追加を開くと下記の様な画面になる  
 ユーザー名を適宜入力,アクセスの種類をプログラムによるアクセスに制限
 
 ![console.aws.amazon.com_iam_home_.png](/static/images/blog/rdsecsdump0.png)
 
-AmazonECS_FullAccess,AmazonEC2ContainerRegistryFullAccess,AmazonS3FullAccessを選択(今回CLIで同一ユーザーを使いたかったので広に権限取ってあります。わかる人は適宜絞ってください。)
+`AmazonECS_FullAccess,AmazonEC2ContainerRegistryFullAccess,AmazonS3FullAccess`を選択
+※ 今回 CLI で同一ユーザーを使いたかったので広に権限取ってあります。わかる人は適宜絞ってください。
 
 ![console.aws.amazon.com_iam_home_ (1).png](/static/images/blog/rdsecsdump1.png)
 
 その後特に設定項目はないのでユーザーの作成まで進む  
-最後にこのような画面が表示されるのでアクセスキーIDとシークレットアクセスキーをメモしておいてください。シークレットアクセスキーに関しては追加発行できますが二度と再表示できないので絶対にメモしておいてください。
+最後にこのような画面が表示されるのでアクセスキー ID とシークレットアクセスキーをメモしておいてください。シークレットアクセスキーに関しては追加発行できますが二度と再表示できないので絶対にメモしておいてください。
 
 ![console.aws.amazon.com_iam_home_ (2).png](/static/images/blog/rdsecsdump2.png)
 
-### IAMロールの作成
+### IAM ロールの作成
 
-タスクを実行するためのロールだが自動で作られるものではあるのだがECSを全く使っていない場合は作成されていないので手動で作成する。  
-(`ecsTaskExecutionRole`と最後に付くロールが既にある場合はそのARNをメモしておいてください)  
-IAMを開き左メニューにあるロールを開くその後ロールの作成を開くと下記の様な画面になる  
+タスクを実行するためのロールだが自動で作られるものではあるのだが ECS を全く使っていない場合は作成されていないので手動で作成する。  
+(`ecsTaskExecutionRole`と最後に付くロールが既にある場合はその ARN をメモしておいてください)  
+IAM を開き左メニューにあるロールを開くその後ロールの作成を開くと下記の様な画面になる  
 `Elastic Container Service`を選択次に`Elastic Container Service Task`を選択次へ
 
 ![console.aws.amazon.com_iam_home_region=ap-northeast-1 (1).png](/static/images/blog/rdsecsdump3.png)
@@ -62,12 +63,12 @@ IAMを開き左メニューにあるロールを開くその後ロールの作�
 特別設定する項目はありません。適宜設定の上作成しておいてください。  
 その際作成した名前をメモしておいてください。
 
-### ECRリポジトリの作成
+### ECR リポジトリの作成
 
 こちらも特別設定する項目はありませんが、パイプラインでタグを上書きする関係上タグのイミュータビリティは無効化しておいてください(デフォルトで無効)  
-作成した後URIのカラムにあるURLみたいなものをメモしておいてください。
+作成した後 URI のカラムにある URL みたいなものをメモしておいてください。
 
-### bitbucketでリポジトリの作成
+### bitbucket でリポジトリの作成
 
 いつも通りリポジトリを作成してください。  
 ローカルで下記の通りファイルを作成してください。
@@ -80,14 +81,14 @@ IAMを開き左メニューにあるロールを開くその後ロールの作�
  └ docker-entrypoint.sh
 ```
 
-.pgpassはpostgresにパスワードを省略してアクセスするためのパスワードファイルですダ下記の通り記述してください。
+.pgpass は postgres にパスワードを省略してアクセスするためのパスワードファイルですダ下記の通り記述してください。
 
 ```shell
 hostname:port:database:username:password
 ```
 
-bitbucket-pipelines.ymlはbitbucketのパイプラインの定義を記述するファイルです下記の通り記述してください。  
-execution-role-arnのところに先ほどメモした`ロール ARN`を記入してください。
+bitbucket-pipelines.yml は bitbucket のパイプラインの定義を記述するファイルです下記の通り記述してください。  
+execution-role-arn のところに先ほどメモした`ロール ARN`を記入してください。
 
 ```yml
 # enable Docker for your repository
@@ -136,7 +137,7 @@ pipelines:
           - echo "Registered ECS Task Definition:" "${TASK_VERSION}"
 ```
 
-DockerfileはECSでデプロイする用のコンテナ定義です下記の通り記述してください。  
+Dockerfile は ECS でデプロイする用のコンテナ定義です下記の通り記述してください。  
 補足がある箇所は先ほどメモしたものから適宜いれてください。
 
 ```dockerfile
@@ -157,9 +158,9 @@ RUN chmod +x /root/docker-entrypoint.sh
 CMD ["/root/docker-entrypoint.sh"]
 ```
 
-docker-entrypoint.shはdocker起動時に実行するコマンド群ですいわゆるcronの中身です。  
+docker-entrypoint.sh は docker 起動時に実行するコマンド群ですいわゆる cron の中身です。  
 補足がある箇所は先ほどメモしたものから適宜いれてください。  
-保存構成的には最初のプレフィックスが削除周期次にDB名最後にファイルの接頭辞が今回はダンプの周期を入れています。
+保存構成的には最初のプレフィックスが削除周期次に DB 名最後にファイルの接頭辞が今回はダンプの周期を入れています。
 
 ```shell
 #!/bin/sh
@@ -171,10 +172,10 @@ aws s3 sync . s3://{S3のバケット}
 
 準備が完了したらいつもの通り先ほど作成したリポジトリにプッシュしてください。
 
-### bitbucketでのpipelineの準備
+### bitbucket での pipeline の準備
 
-先ほどプッシュしたリポジトリをbitbucketで開く  
-設定->PIPELINES->Settingsに進み`Enable Pipelines`を有効にする
+先ほどプッシュしたリポジトリを bitbucket で開く  
+設定->PIPELINES->Settings に進み`Enable Pipelines`を有効にする
 
 ![bitbucket.org_j-roi_dump_admin_addon_admin_pipelines_settings.png](/static/images/blog/rdsecsdump6.png)
 
@@ -183,11 +184,11 @@ aws s3 sync . s3://{S3のバケット}
 
 ![bitbucket.org_j-roi_dump_admin_addon_admin_pipelines_repository-variables.png](/static/images/blog/rdsecsdump7.png)
 
-## デプロイとcronの設定
+## デプロイと cron の設定
 
 ### デプロイの実行
 
-引き続きbitbucketの画面で再度メニューから`Pipelines`を開く次に`Run pipeline`をクリックし下記の通り選択して`Run`をクリック
+引き続き bitbucket の画面で再度メニューから`Pipelines`を開く次に`Run pipeline`をクリックし下記の通り選択して`Run`をクリック
 
 ![bitbucket.org_j-roi_dump_addon_pipelines_home.png](/static/images/blog/rdsecsdump8.png)
 
@@ -197,9 +198,9 @@ aws s3 sync . s3://{S3のバケット}
 
 次回以降ブランチに変更が入る度自動で実行されます。
 
-### AWSでスケジュールの作成
+### AWS でスケジュールの作成
 
-AWS ECS上でリポジトリオーナー名でクラスタが作成されているのでそのクラスタを開く(クラスタ名が書かれているところをクリックすると開きます)。
+AWS ECS 上でリポジトリオーナー名でクラスタが作成されているのでそのクラスタを開く(クラスタ名が書かれているところをクリックすると開きます)。
 
 ![ap-northeast-1.console.aws.amazon.com_ecs_home_region=ap-northeast-1.png](/static/images/blog/rdsecsdump10.png)
 
@@ -207,9 +208,9 @@ AWS ECS上でリポジトリオーナー名でクラスタが作成されてい�
 
 ![ap-northeast-1.console.aws.amazon.com_ecs_home_region=ap-northeast-1 (1).png](/static/images/blog/rdsecsdump11.png)
 
-実行間隔等を設定しターゲットの部分は今回`FARGATE`用にタスクを作成したので起動タイプを`FARGATE`を選択タスク定義のファミリーはリポジトリ名と同名のタスクがあるのでそれを選択する。VPCとセキュリティグループは適宜設定してください。
+実行間隔等を設定しターゲットの部分は今回`FARGATE`用にタスクを作成したので起動タイプを`FARGATE`を選択タスク定義のファミリーはリポジトリ名と同名のタスクがあるのでそれを選択する。VPC とセキュリティグループは適宜設定してください。
 
 ![ap-northeast-1.console.aws.amazon.com_ecs_home_region=ap-northeast-1 (2).png](/static/images/blog/rdsecsdump12.png)
 
-補足:Cron式を選択したときに躓いたのだがbusybox cron等のcron式とは違う模様下記を参考にいたしました。  
-[AWS_Cron式のワイルドカード](https://qiita.com/da-sugi/items/ef3bb45a8a99a4acacb1)
+補足:Cron 式を選択したときに躓いたのだが busybox cron 等の cron 式とは違う模様下記を参考にいたしました。  
+[AWS_Cron 式のワイルドカード](https://qiita.com/da-sugi/items/ef3bb45a8a99a4acacb1)
