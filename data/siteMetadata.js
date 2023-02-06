@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Doa',
   author: 'Ryuki Maruyama',
   headerTitle: 'Doa',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: '気ままな備忘録',
   language: 'ja-jp',
   theme: 'system', // system, dark or light
   siteUrl: 'https://daco.dev',
