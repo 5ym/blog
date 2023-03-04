@@ -25,7 +25,13 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['InterVariable', ...defaultTheme.fontFamily.sans],
+        sans: `"Helvetica Neue",
+        Arial,
+        "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans",
+        "BIZ UDPGothic",
+        Meiryo,
+        sans-serif`,
       },
       colors: {
         primary: colors.teal,
