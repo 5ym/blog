@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:lts-alpine
 
 WORKDIR /usr/src/app
 RUN npm i -g npm && chown -R node:node . && apk add --no-cache curl
