@@ -3,14 +3,14 @@ const projectsData = [
     title: 'Smart-QR-Payment',
     description: `催事等で使える事前注文と店頭受け取りそしてセルフレジ機能をもったウェブアプリをDjangoとvueで作成しました。`,
     imgSrc: '',
-    href: 'https://g.daco.dev/5ym/smart-qr-payment',
+    href: 'https://g.doany.io/5ym/smart-qr-payment',
   },
   {
     title: 'Tweel',
     description: `macab等を利用したtwitter用ウェブアプリを作成しました。
     機能追加を予定しています。`,
     imgSrc: '',
-    href: 'https://tweel.daco.dev/',
+    href: 'https://tweel.doany.io/',
   },
   {
     title: 'SmartEncounter',
