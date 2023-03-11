@@ -1,10 +1,12 @@
 docker-build-master:
-  # Official docker image.
+  stage: build
   image: docker:latest
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
-  stage: build
+  services:
+    - docker:dind
   before_script:
+    - - docker info
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE/main" .
@@ -13,19 +15,20 @@ docker-build-master:
     - master
 
 update-production:
-  image: curlimages/curl
   stage: deploy
+  image: curlimages/curl
   script:
     - curl -X POST $PORTAINER
   only:
     - master
 
 docker-build:
-  # Official docker image.
+  stage: build
   image: docker:latest
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
-  stage: build
+  services:
+    - docker:dind
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
