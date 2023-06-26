@@ -7,7 +7,7 @@ RUN npm run build
 FROM node:lts-slim
 WORKDIR /usr/src/app
 ENV NODE_ENV production
-RUN apk add --no-cache curl
+RUN apt-get update && apt-get -y install curl && rm -rf /var/lib/apt/lists/*
 USER node
 COPY --from=builder --chown=node:node /usr/src/app/.next .next
 COPY --from=builder /usr/src/app/node_modules node_modules
