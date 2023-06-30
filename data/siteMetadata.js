@@ -12,7 +12,7 @@ const siteMetadata = {
   socialBanner: '/static/images/twitter-card.png',
   email: 'info@doany.io',
   github: 'https://github.com/5ym/',
-  twitter: 'https://twitter.com/5yuim/',
+  twitter: 'https://twitter.com/5yuim',
   facebook: 'https://facebook.com/yui5m/',
   youtube: 'https://www.youtube.com/channel/UCJWogAotKEJ70bs_e19yMyQ',
   linkedin: 'https://www.linkedin.com/in/yui/',
