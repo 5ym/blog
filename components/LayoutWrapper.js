@@ -45,7 +45,6 @@ const LayoutWrapper = ({ children }) => {
           </div>
         </header>
         <main className="mb-auto">{children}</main>
-        {/* AdSense */}
         <ins
           className="adsbygoogle"
           style={{ display: 'block' }}
@@ -54,7 +53,6 @@ const LayoutWrapper = ({ children }) => {
           data-ad-format="auto"
           data-full-width-responsive="true"
         ></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         <Footer />
       </div>
     </SectionContainer>

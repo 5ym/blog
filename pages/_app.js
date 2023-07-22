@@ -23,9 +23,15 @@ export default function App({ Component, pageProps }) {
       </Head>
       {isDevelopment && isSocket && <ClientReload />}
       <Analytics />
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568277783171675"
+        crossOrigin="anonymous"
+      ></script>
       <LayoutWrapper>
         <Component {...pageProps} />
       </LayoutWrapper>
+      <>test</>
     </ThemeProvider>
   )
 }
