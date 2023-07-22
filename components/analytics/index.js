@@ -17,6 +17,13 @@ const Analytics = () => {
       {isProduction && siteMetadata.analytics.googleAnalyticsId && <GA />}
       {isProduction && siteMetadata.analytics.posthogAnalyticsId && <Posthog />}
       {isProduction && siteMetadata.analytics.googleTagManagerId && <GTM />}
+      {isProduction && (
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568277783171675"
+          crossOrigin="anonymous"
+        ></script>
+      )}
     </>
   )
 }

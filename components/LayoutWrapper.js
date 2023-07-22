@@ -6,6 +6,7 @@ import SectionContainer from './SectionContainer'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
+import AdBanner from './AdBanner'
 
 const LayoutWrapper = ({ children }) => {
   return (
@@ -45,14 +46,11 @@ const LayoutWrapper = ({ children }) => {
           </div>
         </header>
         <main className="mb-auto">{children}</main>
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client="ca-pub-4568277783171675"
+        <AdBanner
           data-ad-slot="4408731561"
           data-ad-format="auto"
           data-full-width-responsive="true"
-        ></ins>
+        />
         <Footer />
       </div>
     </SectionContainer>
