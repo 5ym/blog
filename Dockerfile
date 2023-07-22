@@ -1,6 +1,6 @@
 FROM node:lts-slim as builder
 WORKDIR /usr/src/app
-COPY package.json package-lock.json .
+COPY package.json package-lock.json ./
 RUN npm i -g npm && npm ci
 COPY . .
 RUN npm run build
