@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
       <LayoutWrapper>
         <Component {...pageProps} />
       </LayoutWrapper>
-      <>test</>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </ThemeProvider>
   )
 }
