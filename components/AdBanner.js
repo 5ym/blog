@@ -9,16 +9,6 @@ const AdBanner = (props) => {
     }
   }, [])
 
-  return (
-    <ins
-      className="adsbygoogle adbanner-customize"
-      style={{
-        display: 'block',
-        overflow: 'hidden',
-      }}
-      data-ad-client="ca-pub-4568277783171675"
-      {...props}
-    />
-  )
+  return <ins className="adsbygoogle mt-4" data-ad-client="ca-pub-4568277783171675" {...props} />
 }
 export default AdBanner

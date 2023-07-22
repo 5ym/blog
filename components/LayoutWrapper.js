@@ -48,7 +48,7 @@ const LayoutWrapper = ({ children }) => {
         <main className="mb-auto">{children}</main>
         <AdBanner
           data-ad-slot="4408731561"
-          data-ad-format="auto"
+          data-ad-format="vertical"
           data-full-width-responsive="true"
         />
         <Footer />
