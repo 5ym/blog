@@ -1,4 +1,5 @@
-import { useEffect, useRouter } from 'react'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const AdBanner = (props) => {
   const { asPath } = useRouter()
