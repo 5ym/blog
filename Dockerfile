@@ -1,8 +1,9 @@
 FROM node:lts-slim as builder
 WORKDIR /usr/src/app
 ENV NODE_ENV production
-COPY package.json yarn.lock ./
-RUN yarn install --immutable --immutable-cache --check-cache
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn .yarn
+RUN yarn install --immutable
 COPY . .
 RUN yarn build
 
