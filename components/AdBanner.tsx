@@ -1,6 +1,12 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
+declare global {
+  interface Window {
+    adsbygoogle: { [key: string]: unknown }[]
+  }
+}
+
 const AdBanner = (props) => {
   const { asPath } = useRouter()
   useEffect(() => {
