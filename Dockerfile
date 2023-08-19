@@ -1,14 +1,15 @@
 FROM node:lts-slim as builder
 WORKDIR /usr/src/app
+ENV NODE_ENV production
 COPY package.json yarn.lock ./
-RUN npm i -g yarn && yarn install --immutable --immutable-cache --check-cache
+RUN yarn install --immutable --immutable-cache --check-cache
 COPY . .
 RUN yarn build
 
 FROM node:lts-slim
 WORKDIR /usr/src/app
 ENV NODE_ENV production
-RUN npm i -g yarn && apt-get update && apt-get -y install curl && rm -rf /var/lib/apt/lists/* && apt-get clean
+RUN apt-get update && apt-get -y install curl && rm -rf /var/lib/apt/lists/* && apt-get clean
 USER node
 COPY --from=builder --chown=node:node /usr/src/app/.next .next
 COPY --from=builder --chown=node:node /usr/src/app/public public
