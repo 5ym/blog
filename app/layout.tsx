@@ -88,7 +88,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568277783171675"
             crossOrigin="anonymous"
           />
-          <Script id="ads">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
           <SectionContainer>
             <div className="flex h-screen flex-col justify-between font-sans">
               <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
