@@ -1,4 +1,4 @@
-FROM node:lts-slim as base
+FROM node:18-slim as base
 
 FROM base as deps
 WORKDIR /usr/src/app
