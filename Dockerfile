@@ -1,4 +1,5 @@
-FROM node:lts-slim as builder
+FROM node:lts-slim as base
+FROM base as builder
 WORKDIR /usr/src/app
 ENV NODE_ENV production
 COPY package.json yarn.lock .yarnrc.yml ./
@@ -7,18 +8,13 @@ RUN yarn --immutable
 COPY . .
 RUN yarn build
 
-FROM node:lts-slim
+FROM base
 WORKDIR /usr/src/app
 ENV NODE_ENV production
-RUN apt-get update && apt-get -y install curl && rm -rf /var/lib/apt/lists/* && apt-get clean
 USER node
-COPY --from=builder --chown=node:node /usr/src/app/.next .next
 COPY --from=builder --chown=node:node /usr/src/app/public public
-COPY --from=builder /usr/src/app/node_modules node_modules
-COPY --from=builder /usr/src/app/package.json .
+COPY --from=builder --chown=node:node /usr/src/app/.next/standalone .
+COPY --from=builder --chown=node:node /usr/src/app/.next/static .next/static
 EXPOSE 3000
-ENTRYPOINT [ "yarn" ]
-CMD [ "serve" ]
-
-HEALTHCHECK \
-    CMD curl localhost:3000
+ENTRYPOINT [ "node" ]
+CMD [ "server.js" ]
