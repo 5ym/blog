@@ -4,14 +4,14 @@ default:
     - docker:dind
 variables:
   DOCKER_TLS_CERTDIR: '/certs'
-  DOCKER_BUILDKIT: '1'
 
 docker-build-main:
   stage: build
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
-    - docker build --pull -t $CI_REGISTRY_IMAGE/main:latest --build-arg BUILDKIT_INLINE_CACHE=1 .
+    - docker pull $CI_REGISTRY_IMAGE/main:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/main:latest -t $CI_REGISTRY_IMAGE/main:latest .
     - docker push $CI_REGISTRY_IMAGE/main:latest
   only:
     - main
@@ -29,7 +29,8 @@ docker-build:
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
-    - docker build --pull -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA --build-arg BUILDKIT_INLINE_CACHE=1 .
+    - docker pull $CI_REGISTRY_IMAGE/main:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/main:latest -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA
   except:
     - main
