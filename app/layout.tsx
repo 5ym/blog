@@ -10,6 +10,13 @@ import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
+import Script from 'next/script'
+
+declare global {
+  interface Window {
+    adsbygoogle: unknown[]
+  }
+}
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -76,11 +83,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
-          <script
+          <Script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568277783171675"
             crossOrigin="anonymous"
           />
+          <Script id="ads">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
           <SectionContainer>
             <div className="flex h-screen flex-col justify-between font-sans">
               <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
