@@ -3,15 +3,16 @@ default:
   services:
     - docker:dind
 variables:
-  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_CERTDIR: '/certs'
 
 docker-build-main:
-  stage: build    
+  stage: build
   before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE/main" .
-    - docker push "$CI_REGISTRY_IMAGE/main"
+    - docker pull $CI_REGISTRY_IMAGE/main || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/main -t "$CI_REGISTRY_IMAGE/main" .
+    - docker push $CI_REGISTRY_IMAGE/main
   only:
     - main
 
@@ -26,9 +27,10 @@ update-production:
 docker-build:
   stage: build
   before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE/main:$CI_COMMIT_REF_SLUG" .
-    - docker push "$CI_REGISTRY_IMAGE/main:$CI_COMMIT_REF_SLUG"
+    - docker pull $CI_REGISTRY_IMAGE/main || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/main -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA
   except:
     - main
