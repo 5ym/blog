@@ -8,11 +8,11 @@ variables:
 docker-build-main:
   stage: build
   before_script:
-    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
-    - docker pull $CI_REGISTRY_IMAGE/main || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE/main -t "$CI_REGISTRY_IMAGE/main" .
-    - docker push $CI_REGISTRY_IMAGE/main
+    - docker pull $CI_REGISTRY_IMAGE/main:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/main:latest -t $CI_REGISTRY_IMAGE/main:latest .
+    - docker push $CI_REGISTRY_IMAGE/main:latest
   only:
     - main
 
@@ -29,8 +29,8 @@ docker-build:
   before_script:
     - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
-    - docker pull $CI_REGISTRY_IMAGE/main || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE/main -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA .
+    - docker pull $CI_REGISTRY_IMAGE/main:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/main:latest -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA
   except:
     - main
