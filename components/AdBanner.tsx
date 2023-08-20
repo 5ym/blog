@@ -13,7 +13,7 @@ const AdBanner = (props: {
         data-ad-client="ca-pub-4568277783171675"
         {...props}
       />
-      <Script id="">{`(adsbygoogle = window.adsbygoogle || []).push({});console.log("reload");`}</Script>
+      <Script id="">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
     </>
   )
 }
