@@ -1,10 +1,14 @@
 FROM node:lts-slim as base
-FROM base as builder
+
+FROM base as deps
 WORKDIR /usr/src/app
-ENV NODE_ENV production
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 RUN yarn --immutable
+
+FROM base as builder
+WORKDIR /usr/src/app
+COPY --from=deps /usr/src/app/node_modules node_modules
 COPY . .
 RUN yarn build
 
