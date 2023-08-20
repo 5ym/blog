@@ -1,29 +1,16 @@
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-
-declare global {
-  interface Window {
-    adsbygoogle: { [key: string]: unknown }[]
-  }
-}
+import Script from "next/script"
 
 const AdBanner = (props) => {
-  const { asPath } = useRouter()
-  useEffect(() => {
-    try {
-      ;(window.adsbygoogle = window.adsbygoogle || []).push({})
-    } catch (err) {
-      console.log(err)
-    }
-  }, [asPath])
-
-  return (
+  return (<>
     <ins
-      key={asPath}
       className="adsbygoogle mt-4"
       data-ad-client="ca-pub-4568277783171675"
       {...props}
     />
-  )
+    <Script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      console.log(window.adsbygoogle)
+    </Script>
+  </>)
 }
 export default AdBanner
