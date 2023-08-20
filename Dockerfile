@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 ENV NODE_ENV production
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
-RUN yarn install --immutable
+RUN yarn --immutable
 COPY . .
 RUN yarn build
 
@@ -21,4 +21,4 @@ ENTRYPOINT [ "yarn" ]
 CMD [ "serve" ]
 
 HEALTHCHECK \
-CMD curl localhost:3000
+    CMD curl localhost:3000

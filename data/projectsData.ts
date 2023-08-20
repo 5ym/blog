@@ -7,8 +7,8 @@ const projectsData = [
   },
   {
     title: 'Tweel',
-    description: `macab等を利用したtwitter用ウェブアプリを作成しました。
-    機能追加を予定しています。`,
+    description:
+      'Twitter Oauth2.0を利用しWebhookでTweetをできるウェブアプリを作成しました。Next.js, mongoDBを利用し完全なSSRで構築してあります。',
     imgSrc: '',
     href: 'https://tweel.doany.io/',
   },
