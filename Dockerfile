@@ -1,20 +1,18 @@
 FROM node:18-slim as base
+WORKDIR /usr/src/app
+ENV NODE_ENV production
 
 FROM base as deps
-WORKDIR /usr/src/app
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 RUN yarn --immutable
 
 FROM base as builder
-WORKDIR /usr/src/app
 COPY --from=deps /usr/src/app/node_modules node_modules
 COPY . .
 RUN yarn build
 
 FROM base
-WORKDIR /usr/src/app
-ENV NODE_ENV production
 USER node
 COPY --from=builder --chown=node:node /usr/src/app/public public
 COPY --from=builder --chown=node:node /usr/src/app/.next/standalone .
