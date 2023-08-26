@@ -5,7 +5,7 @@ ENV NODE_ENV production
 FROM base as deps
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
-RUN yarn --immutable
+RUN yarn --immutable --silent
 
 FROM base as builder
 COPY --from=deps /usr/src/app/node_modules node_modules
