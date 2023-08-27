@@ -47,9 +47,9 @@ const siteMetadata = {
     // Select a provider and use the environment variables associated to it
     // https://vercel.com/docs/environment-variables
     provider: 'disqus', // supported providers: giscus, utterances, disqus
-    // disqusConfig: {
-    //   shortname: process.env.NEXT_PUBLIC_DISQUS_SHORTNAME,
-    // },
+    disqusConfig: {
+      shortname: process.env.NEXT_PUBLIC_DISQUS_SHORTNAME,
+    },
     giscusConfig: {
       // Visit the link below, and follow the steps in the 'configuration' section
       // https://giscus.app/
