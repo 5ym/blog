@@ -8,7 +8,7 @@ const AdBanner = (props: {
   return (
     <>
       <ins
-        className="adsbygoogle mt-4 border-0"
+        className="adsbygoogle mt-4 border-none"
         style={{ display: 'block' }}
         data-ad-client="ca-pub-4568277783171675"
         {...props}
