@@ -31,5 +31,5 @@ input:-webkit-autofill:focus {
 }
 
 iframe {
-  color-scheme: revert;
+  color-scheme: only dark;
 }
