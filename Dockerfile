@@ -21,4 +21,4 @@ EXPOSE 3000
 ENTRYPOINT [ "node" ]
 CMD [ "server.js" ]
 
-HEALTHCHECK CMD [ "node", "-e", `"fetch('http://localhost:3000').catch(process.exit(1))"` ]
+HEALTHCHECK CMD [ "node", "-e", "'fetch(\"http://localhost:3000\").catch(process.exit(1))'" ]
