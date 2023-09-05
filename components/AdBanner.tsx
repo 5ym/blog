@@ -1,6 +1,5 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import Script from 'next/script'
 
 const AdBanner = (props: {
   'data-ad-slot': string
@@ -17,7 +16,7 @@ const AdBanner = (props: {
         {...props}
         className={'adsbygoogle w-full ' + props.className}
       />
-      <Script id="ads">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
+      <script key={pathName}>{`(adsbygoogle = window.adsbygoogle || []).push({});`}</script>
     </>
   )
 }
