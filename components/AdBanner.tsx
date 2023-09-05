@@ -18,7 +18,7 @@ const AdBanner = (props: {
         data-full-width-responsive={props['data-full-width-responsive']}
         className="adsbygoogle w-full"
       />
-      <script>{`(adsbygoogle = window.adsbygoogle || []).push({});`}</script>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   )
 }
