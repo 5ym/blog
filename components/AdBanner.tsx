@@ -9,10 +9,9 @@ const AdBanner = (props: {
   return (
     <>
       <ins
-        style={{ display: 'block' }}
         data-ad-client="ca-pub-4568277783171675"
         {...props}
-        className={'adsbygoogle ' + props.className}
+        className={'adsbygoogle w-full ' + props.className}
       />
       <Script id="adsense">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
     </>
