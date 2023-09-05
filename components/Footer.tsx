@@ -1,10 +1,16 @@
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
+import AdBanner from './AdBanner'
 
 export default function Footer() {
   return (
     <footer>
+      <AdBanner
+        data-ad-slot="4408731561"
+        data-ad-format="horizontal"
+        data-full-width-responsive="true"
+      />
       <div className="mt-16 flex flex-col items-center">
         <div className="mb-3 flex space-x-4">
           <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size={6} />
