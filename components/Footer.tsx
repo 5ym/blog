@@ -11,7 +11,7 @@ export default function Footer() {
           data-ad-slot="4408731561"
           data-ad-format="horizontal"
           data-full-width-responsive="true"
-          className="mb-4"
+          className="mb-6"
         />
         <div className="mb-3 flex space-x-4">
           <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size={6} />
