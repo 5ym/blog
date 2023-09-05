@@ -11,7 +11,6 @@ const AdBanner = (props: {
   return (
     <div key={pathName} className={props.className}>
       <ins
-        key={pathName}
         data-ad-client="ca-pub-4568277783171675"
         data-ad-slot={props['data-ad-slot']}
         data-ad-format={props['data-ad-format']}
