@@ -14,7 +14,7 @@ export default function Footer() {
           className="mb-4"
         />
         <AdBanner
-          data-ad-slot="1339015369"
+          data-ad-slot="4408731561"
           data-ad-format="horizontal"
           data-full-width-responsive="true"
           className="mb-4"

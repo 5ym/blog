@@ -14,7 +14,7 @@ const AdBanner = (props: {
         {...props}
         className={'adsbygoogle w-full ' + props.className}
       />
-      <Script id="adsense">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
+      <Script id="">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
     </>
   )
 }
