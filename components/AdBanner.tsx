@@ -1,5 +1,6 @@
 'use client'
-import Script from 'next/script'
+import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 
 const AdBanner = (props: {
   'data-ad-slot': string
@@ -7,15 +8,17 @@ const AdBanner = (props: {
   'data-full-width-responsive': string
   className: string
 }) => {
+  const pathName = usePathname()
+  useEffect(() => {
+    window.adsbygoogle?.push({})
+  }, [pathName])
   return (
-    <>
-      <ins
-        data-ad-client="ca-pub-4568277783171675"
-        {...props}
-        className={'adsbygoogle w-full ' + props.className}
-      />
-      <Script id="">{`(adsbygoogle = window.adsbygoogle || []).push({});`}</Script>
-    </>
+    <ins
+      key={pathName}
+      data-ad-client="ca-pub-4568277783171675"
+      {...props}
+      className={'adsbygoogle w-full ' + props.className}
+    />
   )
 }
 export default AdBanner
