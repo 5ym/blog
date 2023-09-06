@@ -10,7 +10,11 @@ const AdBanner = (props: {
 }) => {
   const pathName = usePathname()
   useEffect(() => {
-    window.adsbygoogle?.push({})
+    try {
+      window.adsbygoogle?.push({})
+    } catch (error) {
+      console.error(error)
+    }
   }, [pathName])
   return (
     <div key={pathName} className={'w-full ' + props.className}>
