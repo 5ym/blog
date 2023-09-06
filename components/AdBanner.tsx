@@ -8,7 +8,6 @@ const AdBanner = (props: {
   'data-full-width-responsive': string
   className: string
 }) => {
-  const pathName = usePathname()
   const LoadAds = useCallback(() => {
     if (window.adsbygoogle === undefined) {
       const script = document.createElement('script')
@@ -17,9 +16,10 @@ const AdBanner = (props: {
       script.async = true
       document.body.appendChild(script)
     } else {
+      console.log('loaded')
       window.adsbygoogle?.push({})
     }
-  }, [pathName])
+  }, [])
   useEffect(() => {
     LoadAds()
   }, [LoadAds])
@@ -29,7 +29,7 @@ const AdBanner = (props: {
       data-ad-slot={props['data-ad-slot']}
       data-ad-format={props['data-ad-format']}
       data-full-width-responsive={props['data-full-width-responsive']}
-      className={'adsbygoogle ' + props.className}
+      className={'adsbygoogle w-full ' + props.className}
       style={{ display: 'block' }}
     />
   )
