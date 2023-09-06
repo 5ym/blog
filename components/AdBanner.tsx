@@ -19,7 +19,7 @@ const AdBanner = (props: {
         className="adsbygoogle"
         style={{ display: 'block' }}
       />
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      <script>{`(adsbygoogle = window.adsbygoogle || []).push({});`}</script>
     </div>
   )
 }
