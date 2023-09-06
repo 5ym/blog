@@ -11,6 +11,7 @@ const AdBanner = (props: {
   const pathName = usePathname()
   useEffect(() => {
     try {
+      console.log(window.adsbygoogle)
       window.adsbygoogle?.push({})
     } catch (error) {
       console.error(error)
