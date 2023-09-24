@@ -2,9 +2,6 @@ default:
   image: docker:latest
   services:
     - docker:dind
-variables:
-  DOCKER_TLS_CERTDIR: '/certs'
-  DOCKER_BUILDKIT: '1'
 
 docker-build-main:
   stage: build
