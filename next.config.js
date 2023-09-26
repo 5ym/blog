@@ -68,9 +68,6 @@ module.exports = () => {
     images: {
       domains: ['picsum.photos'],
     },
-    experimental: {
-      appDir: true,
-    },
     output: 'standalone',
     async headers() {
       return [
