@@ -66,7 +66,7 @@ module.exports = () => {
       dirs: ['app', 'components', 'layouts', 'scripts'],
     },
     images: {
-      domains: ['picsum.photos'],
+      domains: ['picsum.photos', 'doany.io'],
     },
     output: 'standalone',
     async headers() {
