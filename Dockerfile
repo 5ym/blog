@@ -1,8 +1,8 @@
 FROM node:18-slim as base
 WORKDIR /usr/src/app
-ENV NODE_ENV production
 
 FROM base as deps
+ENV NODE_ENV production
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 RUN yarn --immutable --silent
