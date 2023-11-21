@@ -27,7 +27,7 @@ const AdBanner = (props: {
           let noError = true
           while (noError) {
             try {
-              window.adsbygoogle?.push({})
+              window.adsbygoogle.push({})
             } catch (error) {
               noError = false
             }
