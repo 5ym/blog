@@ -33,3 +33,6 @@ input:-webkit-autofill:focus {
 iframe {
   color-scheme: initial;
 }
+.katex-display {
+  overflow: auto hidden;
+}
