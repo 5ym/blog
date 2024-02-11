@@ -16,6 +16,7 @@ const siteMetadata = {
   facebook: 'https://facebook.com/yui5m/',
   youtube: 'https://www.youtube.com/channel/UCJWogAotKEJ70bs_e19yMyQ',
   linkedin: 'https://www.linkedin.com/in/yui/',
+  instagram: 'https://www.instagram.com/5yuim/',
   locale: 'ja-JP',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
@@ -24,6 +25,9 @@ const siteMetadata = {
     // umamiAnalytics: {
     //   // We use an env variable for this site to avoid other users cloning our analytics ID
     //   umamiWebsiteId: process.env.NEXT_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
+    //   // You may also need to overwrite the script if you're storing data in the US - ex:
+    //   // src: 'https://us.umami.is/script.js'
+    //   // Remember to add 'us.umami.is' in `next.config.js` as a permitted domain for the CSP
     // },
     // plausibleAnalytics: {
     //   plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app

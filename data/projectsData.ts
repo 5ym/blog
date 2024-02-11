@@ -1,4 +1,11 @@
-const projectsData = [
+interface Project {
+  title: string,
+  description: string,
+  href?: string,
+  imgSrc?: string,
+}
+
+const projectsData: Project[] = [
   {
     title: 'Smart-QR-Payment',
     description: `催事等で使える事前注文と店頭受け取りそしてセルフレジ機能をもったウェブアプリをDjangoとvueで作成しました。`,
