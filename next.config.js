@@ -90,5 +90,14 @@ module.exports = () => {
 
       return config
     },
+    async redirects() {
+      return [
+        {
+          source: '/blog/truck-legacy',
+          destination: '/blog/truck',
+          permanent: true,
+        },
+      ]
+    },
   })
 }
