@@ -18,17 +18,15 @@ declare global {
 }
 
 const gothic = BIZ_UDPGothic({
-  weight: ["400", "700"],
-  subsets: ["cyrillic"],
+  weight: ['400', '700'],
+  subsets: ['cyrillic'],
   variable: '--font-gothic',
-});
+})
 const mincho = BIZ_UDPMincho({
-  weight: ["400", "700"],
-  subsets: ["cyrillic"],
+  weight: ['400', '700'],
+  subsets: ['cyrillic'],
   variable: '--font-mincho',
 })
-
-
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
