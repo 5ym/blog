@@ -22,7 +22,9 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['var(--font-space-grotesk)', 'var(--font-ud)', ...fontFamily.sans],
+        sans: ['BIZ UDPGothic', 'var(--font-gothic)'],
+        serif: ['BIZ UDPMincho', 'var(--font-mincho)'],
+        mono: ['MesloLGS NF'],
       },
       colors: {
         primary: colors.pink,

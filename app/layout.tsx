@@ -1,7 +1,7 @@
 import 'css/tailwind.css'
 import 'pliny/search/algolia.css'
 
-import { BIZ_UDPGothic, Space_Grotesk } from 'next/font/google'
+import { BIZ_UDPGothic, BIZ_UDPMincho, Space_Grotesk } from 'next/font/google'
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
@@ -17,16 +17,18 @@ declare global {
   }
 }
 
-const space_grotesk = Space_Grotesk({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-space-grotesk',
+const gothic = BIZ_UDPGothic({
+  weight: ["400", "700"],
+  subsets: ["cyrillic"],
+  variable: '--font-gothic',
+});
+const mincho = BIZ_UDPMincho({
+  weight: ["400", "700"],
+  subsets: ["cyrillic"],
+  variable: '--font-mincho',
 })
-const ud = BIZ_UDPGothic({
-  weight: ['400', '700'],
-  subsets: ['cyrillic'],
-  variable: '--font-ud',
-})
+
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -72,7 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${ud.variable} ${space_grotesk.variable} scroll-smooth`}
+      className={`${gothic.variable} ${mincho.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
