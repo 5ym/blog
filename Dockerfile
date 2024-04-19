@@ -1,4 +1,4 @@
-FROM node:18-slim as base
+FROM node:20-slim as base
 WORKDIR /usr/src/app
 
 FROM base as deps
