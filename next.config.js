@@ -13,7 +13,7 @@ const ContentSecurityPolicy = `
   media-src *;
   connect-src *;
   font-src 'self';
-  frame-src giscus.app *.g.doubleclick.net *.googlesyndication.com *.google.com
+  frame-src giscus.app *.g.doubleclick.net *.googlesyndication.com *.google.com;
 `
 
 const securityHeaders = [
