@@ -1,13 +1,13 @@
-FROM node:20-slim as base
+FROM node:20-slim AS base
 WORKDIR /usr/src/app
 
-FROM base as deps
-ENV NODE_ENV production
+FROM base AS deps
+ENV NODE_ENV=production
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 RUN yarn --immutable --silent
 
-FROM base as builder
+FROM base AS builder
 COPY --from=deps /usr/src/app/node_modules node_modules
 COPY . .
 RUN yarn build
