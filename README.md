@@ -7,4 +7,4 @@ docker compose run --rm blog yarn
 docker compose up
 ```
 
-http://localhost:3000
+<http://localhost:3000>
