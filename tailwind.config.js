@@ -4,11 +4,6 @@
 module.exports = {
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['BIZ UDPGothic', 'var(--font-gothic)'],
-        serif: ['BIZ UDPMincho', 'var(--font-mincho)'],
-        mono: ['MesloLGS NF'],
-      },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {

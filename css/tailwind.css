@@ -6,8 +6,9 @@
 /* Core theme configuration */
 @theme {
   /* Font families */
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: 'BIZ UDPGothic', 'var(--font-gothic)';
+  --font-serif: 'BIZ UDPMincho', 'var(--font-mincho)';
+  --font-mono: 'MesloLGS NF';
 
   /* Colors */
   /* Copied from https://tailwindcss.com/docs/theme#default-theme-variable-reference */
