@@ -9,8 +9,9 @@ docker-build-main:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
     - docker pull $CI_REGISTRY_IMAGE/main:latest || true
-    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $CI_REGISTRY_IMAGE/main:latest -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA .
+    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $CI_REGISTRY_IMAGE/main:latest -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
   only:
     - main
 
