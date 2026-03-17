@@ -3,22 +3,25 @@ default:
   services:
     - docker:dind
 
+variables:
+  DOCKER_BUILDKIT: 1
+
 docker-build-main:
   stage: build
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
   script:
-    - docker pull $CI_REGISTRY_IMAGE/main:latest || true
-    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $CI_REGISTRY_IMAGE/main:latest -t $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE/main:latest .
-    - docker push $CI_REGISTRY_IMAGE/main:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE/main:latest
-  only:
-    - main
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
 
 update-production:
   stage: deploy
   image: curlimages/curl
   script:
-    - curl -X POST "$PORTAINER?tag=$CI_COMMIT_SHA"
-  only:
-    - main
+    - curl -f -X POST "$PORTAINER?tag=$CI_COMMIT_SHA"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
