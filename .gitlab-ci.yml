@@ -22,6 +22,6 @@ update-production:
   stage: deploy
   image: curlimages/curl
   script:
-    - curl -f -X POST "$PORTAINER?tag=$CI_COMMIT_SHA"
+    - curl -f -X POST "$PORTAINER?TAG=$CI_COMMIT_SHA"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
