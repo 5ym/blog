@@ -83,7 +83,7 @@ ArgoCD自体もk3sの`HelmChart` CRDでマニフェストとして宣言して�
 
 ```yaml
 secretsScope:
-  projectSlug: doany-cluster
+  projectSlug: doany
   envSlug: prod
   secretsPath: /yosegaki/yosegaki-secrets
 ```
