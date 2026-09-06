@@ -41,7 +41,7 @@ spec:
     infisicalSecret:
       enabled: true
       identityId: f2bc3416-f196-4626-9bf3-c11693b32cc6
-      projectSlug: k3s-cluster
+      projectSlug: doany-cluster
       path: /yosegaki/yosegaki-secrets
     persistence:
       storageClass: local-path-retain
