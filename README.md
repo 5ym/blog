@@ -47,4 +47,4 @@ draft: false
 ## デプロイ
 
 `main` への push で GitHub Actions がイメージをビルドし `ghcr.io` へ push、
-`k3s/deployment.yaml` のタグを自動更新する。配信は Caddy（`Caddyfile`）。
+`deploy/deployment.yaml` のタグを自動更新する。配信は Caddy（`Caddyfile`）。

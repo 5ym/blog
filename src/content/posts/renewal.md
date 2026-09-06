@@ -63,12 +63,12 @@ redir @blogPost /posts/{re.blogPost.1}/ permanent
 
 ここが個人的に一番気に入っているところで、手元から`kubectl apply`を叩くことは一切ありません。
 
-`main`にpushするとまずGitHub Actionsがイメージをビルドして`ghcr.io`へpushします。そのあと同じジョブが`k3s/deployment.yaml`のイメージタグをコミットSHAに書き換えてリポジトリにコミットし返します。
+`main`にpushするとまずGitHub Actionsがイメージをビルドして`ghcr.io`へpushします。そのあと同じジョブが`deploy/deployment.yaml`のイメージタグをコミットSHAに書き換えてリポジトリにコミットし返します。
 
 ```yaml
 - name: Update deployment image tag
   run: |
-    sed -i "s#image: ${REGISTRY}/${IMAGE_NAME}:.*#image: ${REGISTRY}/${IMAGE_NAME}:${GITHUB_SHA}#" k3s/deployment.yaml
+    sed -i "s#image: ${REGISTRY}/${IMAGE_NAME}:.*#image: ${REGISTRY}/${IMAGE_NAME}:${GITHUB_SHA}#" deploy/deployment.yaml
 ```
 
 そしてk3s側にはArgoCDが常駐していてこのリポジトリを監視しています。マニフェストの変更を検知すると自動で同期し、新しいイメージのPodに入れ替わります。  
@@ -161,7 +161,7 @@ APIはJSONだけを返す作りで、埋め込みスクリプトはその一利�
 <script src="https://yk.doany.io/embed.js"></script>
 ```
 
-デプロイはHelmチャートにして、CIが`ghcr.io`にOCIで押し込んだものを、このブログの`k3s/`からHelmChartとして参照しています。SQLiteのファイルをPVCに1つ持つだけなので、運用の形はArtalkのときと変わっていません。  
+デプロイはHelmチャートにして、CIが`ghcr.io`にOCIで押し込んだものを、このブログの`deploy/`からHelmChartとして参照しています。SQLiteのファイルをPVCに1つ持つだけなので、運用の形はArtalkのときと変わっていません。  
 なお乗り換えを決めた時点でコメントは0件でした。移行コストが実質ゼロだったので何度も踏み切れた、という面は正直あります。
 
 ## 購読と支援
