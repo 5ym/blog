@@ -45,7 +45,12 @@ spec:
         oidc:
           issuer: https://login.microsoftonline.com/22ac977d-b140-4dc8-8150-90d645d3475b/v2.0
           clientId: b0fa498f-7e6a-4fe1-a1c6-16fbbb6f397e
+          # Entra のグループクレームからアプリロールへ移行中。**両方を並べておく。**
+          # yosegaki は groups と roles を合わせて見る (src/lib/server/oidc.ts) ので、
+          # どちらで来ても通る。groups をやめたら GUID の行を落とす
+          # (danything/gitops の docs/entra.md)
           adminGroups:
+            - admin
             - 5847ec59-0f80-4713-89f9-3624cc217468
           label: Microsoft
         turnstile:
