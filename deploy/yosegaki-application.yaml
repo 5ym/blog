@@ -1,0 +1,69 @@
+# コメントサーバ yosegaki (https://github.com/danything/yosegaki)。
+# チャートは yosegaki 側の CI が OCI で ghcr に push する。version は 0.1.<CI の run 番号>
+# (取り消された run の番号は飛ぶので、連番とは限らない)。
+# 秘密は Infisical の /yosegaki/yosegaki-secrets (secret, oidc-client-secret, smtp-password,
+# turnstile-secret) を純正 operator が Secret yosegaki-secrets にする。
+#
+# **k3s の HelmChart CRD から移した (2026-09-07)。** HelmChart は k3s 固有で Talos には無い。
+# **PVC (yosegaki-db) を持つので、HelmChart CR を消すときは先に helm のリリース Secret を
+# 消してアンインストールを空振りさせること** (danything/gitops の docs/decisions.md)。
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: yosegaki
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: blog
+  source:
+    repoURL: ghcr.io/danything/charts
+    chart: yosegaki
+    targetRevision: 0.1.9
+    helm:
+      releaseName: yosegaki
+      valuesObject:
+        host: yk.doany.io
+        # 公開は Cilium Gateway。HTTPRoute は danything/gitops の
+        # apps/gateway-routes/blog-yosegaki.yaml にあるので、chart の Ingress は要らない
+        ingress:
+          enabled: false
+        siteName: doany.io
+        allowedOrigins:
+          - https://doany.io
+        # 承認なしで公開。bot は Turnstile で止める
+        moderation: none
+        admin:
+          name: ruk
+          email: info@doany.io
+        # 管理者は Entra ID でログインする。ArgoCD と同じアプリ登録・同じ "admins" グループ
+        # (bootstrap/argocd/helmchart.yaml の RBAC と同じ Object ID)。client secret は
+        # Infisical の oidc-client-secret
+        oidc:
+          issuer: https://login.microsoftonline.com/22ac977d-b140-4dc8-8150-90d645d3475b/v2.0
+          clientId: b0fa498f-7e6a-4fe1-a1c6-16fbbb6f397e
+          adminGroups:
+            - 5847ec59-0f80-4713-89f9-3624cc217468
+          label: Microsoft
+        turnstile:
+          # Cloudflare ダッシュボード → Turnstile → doany.io のウィジェット。公開値
+          siteKey: 0x4AAAAAAEoiKxn884OxoH4h
+        smtp:
+          host: smtp.office365.com
+          port: 587
+          user: info@doany.io
+          from: info@doany.io
+        infisicalSecret:
+          enabled: true
+          identityId: f2bc3416-f196-4626-9bf3-c11693b32cc6
+          projectSlug: doa
+          path: /yosegaki/yosegaki-secrets
+        persistence:
+          storageClass: local-path-retain
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
