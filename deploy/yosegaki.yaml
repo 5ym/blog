@@ -9,10 +9,14 @@ metadata:
   namespace: kube-system
 spec:
   chart: oci://ghcr.io/danything/charts/yosegaki
-  version: 0.1.7
+  version: 0.1.9
   targetNamespace: blog
   valuesContent: |-
     host: yk.doany.io
+    # 公開は Cilium Gateway。HTTPRoute は danything/gitops の
+    # apps/gateway-routes/blog-yosegaki.yaml にあるので、chart の Ingress は要らない
+    ingress:
+      enabled: false
     siteName: doany.io
     allowedOrigins:
       - https://doany.io
