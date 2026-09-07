@@ -22,7 +22,7 @@ spec:
   source:
     repoURL: ghcr.io/danything/charts
     chart: yosegaki
-    targetRevision: 0.1.9
+    targetRevision: 0.1.10
     helm:
       releaseName: yosegaki
       valuesObject:
