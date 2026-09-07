@@ -1,5 +1,5 @@
 {
-	# TLS は Traefik が終端するため、転送元ヘッダを信頼する
+	# TLS は前段の Cilium Gateway が終端するため、転送元ヘッダを信頼する
 	servers {
 		trusted_proxies static private_ranges
 	}
